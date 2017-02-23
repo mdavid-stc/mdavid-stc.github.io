@@ -1,0 +1,33 @@
+---
+title: 'Developing Data Products: Week 2 Assignment'
+author: "Mark David"
+date: "February 22, 2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, comment = "")
+```
+
+## Cities in which I Have Lived
+```{r fig.align="center", message=FALSE}
+library(leaflet)
+
+df <- data.frame(
+    lat = c(48.2,      -5.783333, 50.083333, 46.3691667,  39.2902778,   37.3688889,   33.7444444,   39.7391667),
+    lng = c(16.366667,-35.216667, 14.466667, 14.1136111, -76.6125000, -122.0352778, -118.3861111, -104.9841667),
+    names = c("Vienna, Austria", "Natal, Brazil",  "Prague, Czech Republic",  "Lake Bled, Slovenia",    "Baltimore, MD", "Sunnyvale, CA", "Palos Verdes, CA", "Denver, CO")
+)
+
+houseIcon <- makeIcon(
+    iconUrl = "http://www.iconsdb.com/icons/preview/royal-blue/house-xxl.png",
+    iconWidth = 26, iconHeight = 26,
+    iconAnchorX = 13, iconAnchorY = 13
+)
+
+my_map <- df %>%
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(icon = houseIcon, popup = df$names, clusterOptions = markerClusterOptions())
+my_map
+```
