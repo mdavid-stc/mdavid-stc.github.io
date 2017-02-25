@@ -1,0 +1,33 @@
+---
+title: 'Developing Data Products: Week 3 Assignment'
+author: "Mark David"
+date: "February 24, 2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, comment = "")
+```
+
+## Measuring the Speed of Light
+The data is from a series of 5 experiments (20 runs each) carried out in 1879 attempting to measure the speed of light.
+```{r fig.align="center", warn=FALSE, message=FALSE}
+library(plotly)
+set.seed(654654)
+
+michelson <- transform(morley, Expt = factor(Expt), Run = factor(Run))
+correct <- 299792 - 299000  # The correct speed of light in km/sec
+
+xax <- list(
+  title = "Experiment No."
+)
+yax <- list(
+  title = "Speed Estimate"
+)
+
+plot_ly(michelson, x = ~Expt, y = ~Speed, type = "box", color = ~Expt) %>%
+    add_trace(y = correct, color = "Actual") %>%
+    layout(title = "19th century Attempts to Measure Lightspeed", xaxis = xax, yaxis = yax)
+```
+Most estimates overshot the true value of [299]792 km/sec.
+
